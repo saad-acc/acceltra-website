@@ -7,6 +7,7 @@ This repository contains the static website for Acceltra, ready to be hosted on 
 ```
 .
 ├── index.html          # Main homepage
+├── 404.html           # Custom 404 error page
 ├── impressum.html      # Imprint/Legal page
 ├── tos.html           # Terms of Service
 ├── privacy.html       # Privacy Policy
@@ -42,7 +43,7 @@ This repository contains the static website for Acceltra, ready to be hosted on 
 4. Under "Source", select the branch (usually `main` or `master`)
 5. Select the folder (usually `/ (root)`)
 6. Click "Save"
-7. Your site will be available at `https://[username].github.io/[repository-name]/`
+7. Your site will be available at `https://saad-acc.github.io/acceltra-website/`
 
 ### Option 2: Using GitHub Actions
 
@@ -68,9 +69,11 @@ To view the website locally:
 
 - All external URLs have been converted to relative paths for GitHub Pages compatibility
 - All internal links have been updated to work with GitHub Pages structure
+- Custom 404 error page created and styled to match the site design
 - The website uses Webflow-generated HTML/CSS/JS
 - Images and assets are stored locally in the repository
 - External fonts (Google Fonts) are loaded from CDN
+- Webflow badge has been removed from all pages
 - The cookie consent script has been removed (you can add it back if needed)
 
 ## To-Do / Future Improvements
@@ -81,7 +84,7 @@ To view the website locally:
 - [ ] **SEO Optimization:** Add meta descriptions, Open Graph tags, and structured data
 - [ ] **Performance:** Optimize images (compress, use WebP format where possible)
 - [ ] **Analytics:** Add Google Analytics or similar tracking if needed
-- [ ] **404 Page:** Create a custom 404.html page for GitHub Pages
+- [x] **404 Page:** Create a custom 404.html page for GitHub Pages ✅
 - [ ] **Testing:** Test all internal links and navigation on GitHub Pages
 - [ ] **Mobile Testing:** Verify responsive design works correctly on all devices
 - [ ] **Accessibility:** Run accessibility audit and fix any issues
