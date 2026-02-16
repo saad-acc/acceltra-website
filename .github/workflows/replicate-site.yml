@@ -10,9 +10,6 @@ on:
   # schedule:
   #   - cron: '0 0 * * *'
 
-permissions:
-  contents: read
-  
 jobs:
   sync:
     runs-on: ubuntu-latest
@@ -20,21 +17,17 @@ jobs:
     steps:
       - name: Checkout source repository
         uses: actions/checkout@v4
-        with:
-          persist-credentials: false
-          fetch-depth: 0
 
       - name: Push to destination repository
-        shell: bash
         run: |
           git config --global user.email github-actions@acceltra.cloud
           git config --global user.name "AcceltraGithubActions"
+          rm -rf acceltra-website2
+          git clone https://${{ env.ORG_NAME }}:${{ secrets.PAT }}@github.com/${{ env.ORG_NAME }}/acceltra-website2.git
           
-          DEST_DIR="$(mktemp -d)"
-          git clone "https://${ORG_NAME}:${PAT}@github.com/${ORG_NAME}/acceltra-website2.git" "$DEST_DIR"
-          cd "$DEST_DIR"
+          rsync -a --delete --exclude='.git' --exclude='.github' "$GITHUB_WORKSPACE/" acceltra-website2/
+          cd acceltra-website2
           
-          rsync -a --delete --exclude='.git' --exclude='.github' "$GITHUB_WORKSPACE/" .
           git add -A
           git commit -m "Force sync from ${ORIGINAL_REPO_NAME} (exclude .github)" || true
           git push origin main --force
