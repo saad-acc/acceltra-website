@@ -24,9 +24,12 @@ jobs:
           git config --global user.name "AcceltraGithubActions"
           rm -rf acceltra-website2
           git clone https://${{ env.ORG_NAME }}:${{ secrets.PAT }}@github.com/${{ env.ORG_NAME }}/acceltra-website2.git
-          
-          rsync -a --delete --exclude='.git' --exclude='.github' "$GITHUB_WORKSPACE/" acceltra-website2/
+          ls
           cd acceltra-website2
+          ls
+          
+          rsync -a --delete --exclude='.git' --exclude='.github' "$GITHUB_WORKSPACE/" .
+          ls
           
           git add -A
           git commit -m "Force sync from ${ORIGINAL_REPO_NAME} (exclude .github)" || true
