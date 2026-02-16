@@ -26,7 +26,7 @@ jobs:
           git clone https://${{ env.ORG_NAME }}:${{ secrets.PAT }}@github.com/${{ env.ORG_NAME }}/acceltra-website2.git dest-repo
           
           rsync -av --delete \
-            --exclude '.git' --exclude '.github' --exclude 'dest-repo' \
+            --exclude '.git' --exclude '.github' --exclude 'dest-repo' --exclude 'CNAME' \
             ./ dest-repo/
 
           cd dest-repo
