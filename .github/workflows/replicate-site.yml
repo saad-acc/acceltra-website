@@ -16,19 +16,22 @@ jobs:
 
     steps:
       - name: Checkout source repository
-        uses: actions/checkout@v2
+        uses: actions/checkout@v4
 
       - name: Push to destination repository
         run: |
           git config --global user.email github-actions@acceltra.cloud
           git config --global user.name "AcceltraGithubActions"
+          rm -rf acceltra-website2
           git clone https://${{ env.ORG_NAME }}:${{ secrets.PAT }}@github.com/${{ env.ORG_NAME }}/acceltra-website2.git
           cd acceltra-website2
-          rm -rf .github
           git remote add ${{ env.ORIGINAL_REPO_NAME }} https://${{ env.ORG_NAME }}:${{ secrets.PAT }}@github.com/${{ env.ORG_NAME }}/${{ env.ORIGINAL_REPO_NAME }}.git
-          git remote update
-          git merge ${{ env.ORIGINAL_REPO_NAME }}/main
-          git push origin main
+          git fetch source main
+          git checkout -B main source/main
+          rm -rf .github
+          git add -A
+          git commit -m "Force sync from ${ORIGINAL_REPO_NAME} (exclude .github)" || true
+          git push origin main --force
         env:
           GITHUB_TOKEN: ${{ secrets.PAT }}
           ORIGINAL_REPO_NAME: ${{ github.event.repository.name }}
