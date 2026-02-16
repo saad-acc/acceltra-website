@@ -20,8 +20,8 @@ jobs:
 
       - name: Push to destination repository
         run: |
-          git config --global user.email "github-actions@acceltra.cloud"
-          git config --global user.name "Acceltra Github Actions"
+          git config --global user.email github-actions@acceltra.cloud
+          git config --global user.name "AcceltraGithubActions"
           git clone https://${{ env.ORG_NAME }}:${{ secrets.PAT }}@github.com/${{ env.ORG_NAME }}/acceltra-website2.git
           cd acceltra-website2
           git remote add ${{ env.ORIGINAL_REPO_NAME }} https://${{ env.ORG_NAME }}:${{ secrets.PAT }}@github.com/${{ env.ORG_NAME }}/${{ env.ORIGINAL_REPO_NAME }}.git
