@@ -25,10 +25,7 @@ jobs:
           rm -rf acceltra-website2
           git clone https://${{ env.ORG_NAME }}:${{ secrets.PAT }}@github.com/${{ env.ORG_NAME }}/acceltra-website2.git
           cd acceltra-website2
-          git remote add ${{ env.ORIGINAL_REPO_NAME }} https://${{ env.ORG_NAME }}:${{ secrets.PAT }}@github.com/${{ env.ORG_NAME }}/${{ env.ORIGINAL_REPO_NAME }}.git
-          git fetch source main
-          git checkout -B main source/main
-          rm -rf .github
+          rsync -a --delete --exclude='.git' --exclude='.github' "$GITHUB_WORKSPACE/" .
           git add -A
           git commit -m "Force sync from ${ORIGINAL_REPO_NAME} (exclude .github)" || true
           git push origin main --force
