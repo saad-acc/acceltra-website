@@ -18,17 +18,19 @@ jobs:
       - name: Checkout source repository
         uses: actions/checkout@v4
 
-      - name: Push to destination repository
+      - name: Set Git Config
         run: |
           git config --global user.email github-actions@acceltra.cloud
           git config --global user.name "AcceltraGithubActions"
-          rm -rf acceltra-website2
-          git clone https://${{ env.ORG_NAME }}:${{ secrets.PAT }}@github.com/${{ env.ORG_NAME }}/acceltra-website2.git
           
-          rsync -a --delete --exclude='.git' --exclude='.github' --exclude='acceltra-website2' "$GITHUB_WORKSPACE/" .
-          cd acceltra-website2
+          git clone https://${{ env.ORG_NAME }}:${{ secrets.PAT }}@github.com/${{ env.ORG_NAME }}/acceltra-website2.git dest-repo
           
-          git add -A
+          rsync -av --delete \
+            --exclude '.git' --exclude '.github' \
+            ./ dest-repo/
+
+          cd dest-repo
+          git add .
           git commit -m "Force sync from ${ORIGINAL_REPO_NAME} (exclude .github)" || true
           git push origin main --force
         env:
